@@ -6,7 +6,7 @@ use autodie;
 
 use 5.008;
 
-use Test::More tests => 9;
+use Test::More tests => 10;
 use Time::HiRes qw/time/;
 
 use App::Timestamper::Filter::TS;
@@ -42,14 +42,18 @@ use App::Timestamper::Filter::TS;
         }
     );
 
+    my $end = time();
     # TEST
-    is ($results[0]->{str}, "First line\n");
+    is (scalar(@results), 4, "Got 4 results.");
+
     # TEST
-    is ($results[1]->{str}, "Second line\n");
+    is ($results[0]->{str}, "First line\n", "First line str",);
     # TEST
-    is ($results[2]->{str}, "Line\twith-tab.\n");
+    is ($results[1]->{str}, "Second line\n", "Second line str");
     # TEST
-    is ($results[3]->{str}, "Final line.\n");
+    is ($results[2]->{str}, "Line\twith-tab.\n", "Third line str");
+    # TEST
+    is ($results[3]->{str}, "Final line.\n", "fourth line str",);
 
     close ($in_fh);
 
