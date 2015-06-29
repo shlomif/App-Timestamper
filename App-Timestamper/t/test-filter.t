@@ -6,7 +6,7 @@ use autodie;
 
 use 5.008;
 
-use Test::More tests => 10;
+use Test::More tests => 11;
 use Time::HiRes qw/time/;
 
 use App::Timestamper::Filter::TS;
@@ -54,6 +54,17 @@ use App::Timestamper::Filter::TS;
     is ($results[2]->{str}, "Line\twith-tab.\n", "Third line str");
     # TEST
     is ($results[3]->{str}, "Final line.\n", "fourth line str",);
+
+    my @got = ($start, (map { $_->{ts} } @results), $end);
+
+    my @expected = (sort { $a <=> $b } @got);
+
+    # TEST
+    is_deeply(
+        \@got,
+        \@expected,
+        "Timestamps consistently increase.",
+    );
 
     close ($in_fh);
 
