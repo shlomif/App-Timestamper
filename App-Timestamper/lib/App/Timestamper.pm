@@ -54,7 +54,14 @@ sub _init
         exit(0);
     }
 
-    local @ARGV = @$argv;
+    $self->{_argv} = $argv;
+}
+
+sub run
+{
+    my ($self) = @_;
+
+    local @ARGV = @{$self->{_argv}};
 
     App::Timestamper::Filter::TS->new->fh_filter(\*ARGV, sub {print $_[0];});
 
@@ -65,15 +72,17 @@ sub _init
 
 __END__
 
+=encoding utf8
+
 =head1 NAME
 
 App::Timestamper - prefix lines with the timestamps of their arrivals.
 
 =head1 SYNOPSIS
 
-    use App::Countdown;
+    use App::Timestamper;
 
-    App::Countdown->new({ argv => [@ARGV] })->run();
+    App::Timestamper->new({ argv => [@ARGV] })->run();
 
 =head1 DESCRIPTION
 
@@ -102,5 +111,30 @@ A constructor. Accepts the argv named arguments.
 =head2 run
 
 Runs the program.
+
+=head1 SEE ALSO
+
+=head2 “ts” from “moreutils”
+
+“ts” is a program that is reportedely similar to “timestamper” and
+is contained in joeyh’s “moreutils” (see L<http://joeyh.name/code/moreutils/>)
+package. It is not easy to find online.
+
+=head2 Chumbawamba’s song “Tubthumping”
+
+I really like the song “Tubthumping” by Chumbawamba, which was a hit during
+the 1990s and sounds similar to “Timestamping”, so please check it out:
+
+=over 4
+
+=item * English Wikipedia Page
+
+L<http://en.wikipedia.org/wiki/Tubthumping>
+
+=item * YouTube Search for the Video
+
+L<http://www.youtube.com/results?search_query=chumbawamba%20tubthumping>
+
+=back
 
 =cut
