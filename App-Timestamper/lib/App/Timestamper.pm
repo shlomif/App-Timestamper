@@ -102,6 +102,40 @@ It will become something like:
     1435254302.569615087\tSecond Line
     1435254319.809459781\tThird Line
 
+=head2 Some use cases
+
+Some people asked me what is B<timestamper> useful for, so I'll try to
+explain because I wrote the first version out of a need.
+
+Let's suppose you have a simulation that outputs a "Reached $N iterations"
+line after every certain number of iterations. Like so:
+
+    Reached 100000 iterations
+    Reached 200000 iterations
+    Reached 300000 iterations
+    .
+    .
+    .
+
+You wish to draw a graph of iterations vs. time to analyse the performance
+of the program. So what you can do is pipe it through B<timestamper> and then
+get:
+
+    1435254285.978485482\tReached 100000 iterations
+    1435254302.569615087\tReached 200000 iterations
+    1435254319.809459781\tReached 300000 iterations
+
+And after putting it in a file (using "tee" or whatever), you can filter
+the lines like this:
+
+    perl -lane 'print "$1\t$2" if /\A([0-9\.]+)\tReached ([0-9]+) iterations\z/'
+
+And get a nice tab-separated-value report of the time stamps in seconds and
+the iterations which you can plot using your favourite spreadsheet program
+or visualation framework.
+
+Hope it helps.
+
 =head1 SUBROUTINES/METHODS
 
 =head2 new
