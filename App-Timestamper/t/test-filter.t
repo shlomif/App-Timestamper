@@ -29,7 +29,7 @@ use App::Timestamper::Filter::TS;
             my ($l) = @_;
 
             # TEST:$num_lines=4;
-            if (my ($time, $s) = $l =~ m#\A([0-9]+(?:\.[0-9]+)?)\t([^\n]+\n)\z#)
+            if (my ($time, $s) = $l =~ m#\A([1-9][0-9]*(?:\.[0-9]+)?)\t([^\n]+\n)\z#)
             {
                 # TEST*$num_lines
                 ok (1, "String matched.");

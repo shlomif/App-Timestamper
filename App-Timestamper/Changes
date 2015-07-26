@@ -1,4 +1,8 @@
 Revision history for App-Timestamper
 
+v0.0.2      2015-07-26
+    - Implement better granularity for the time stamps.
+    - Add some explanation for possible use cases for the program.
+
 v0.0.1      2015-07-05
     - First version, released on an unsuspecting world

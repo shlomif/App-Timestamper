@@ -16,7 +16,7 @@ sub fh_filter
 
     while (my $l = <$in>)
     {
-        $out->(time() . "\t" . $l);
+        $out->(sprintf('%.9f', time()) . "\t" . $l);
     }
 
     return;
