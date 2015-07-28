@@ -3,7 +3,7 @@ package App::Timestamper;
 use strict;
 use warnings;
 
-use Getopt::Long qw(2.36 GetOptionsFromArray);
+use Getopt::Long 2.36 qw(GetOptionsFromArray);
 use Pod::Usage qw/pod2usage/;
 
 use App::Timestamper::Filter::TS;
