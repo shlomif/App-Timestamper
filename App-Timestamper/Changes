@@ -1,5 +1,12 @@
 Revision history for App-Timestamper
 
+v0.0.4      2015-09-19
+    - Add “./contrib/ts-format”.
+        - See the “Common Requests” section of the POD.
+        - https://rt.cpan.org/Public/Bug/Display.html?id=106258
+    - Happy Talk Like a Pirate Day - Arrrrrrrrrr!
+    - Happy Software Freedom Day.
+
 v0.0.3      2015-07-28
     - Add a prereq on Getopt::Long 2.36 by fixing the "use" line.
         - Thanks to this CPAN Testers report:

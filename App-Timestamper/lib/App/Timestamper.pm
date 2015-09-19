@@ -136,6 +136,46 @@ or visualation framework.
 
 Hope it helps.
 
+=head1 COMMON REQUESTS
+
+=head2 Can you add an option to provide formatting options to the timestamp?
+
+This was requested here -
+L<https://rt.cpan.org/Public/Bug/Display.html?id=106258> - and my reply was
+that it can be easily implemented as a post-processing filter and so may be
+considered unnecessary feature creep, which may also hurt performance.
+However, since this may be a common request, I have added the
+“./contrib/ts-format” program that can be used for that:
+
+    $ export TIMESTAMPER_FORMAT="%Y-%m-%d-%H:%M:%S"
+    $ cat | timestamper | ./contrib/ts-format
+    Hello
+    There
+    Good
+    2015-09-19-14:05:01     Hello
+    2015-09-19-14:05:03     There
+    2015-09-19-14:05:05     Good
+
+Enjoy!
+
+I may fork it into its own CPAN distribution in the future.
+
+=head2 I want a Pony!
+
+Sure thing! Here you go:
+
+    $ cat | perl -pE 's#^#Fluttershy\t#' | timestamper
+    Arrrrrr!
+    Avast!
+    Ye scurvy dogs!
+    1442662118.609309912    Fluttershy      Arrrrrr!
+    1442662118.609441042    Fluttershy      Avast!
+    1442662118.609464884    Fluttershy      Ye scurvy dogs!
+
+(Fluttershy being L<http://mlp.wikia.com/wiki/Fluttershy> .)
+
+How to add a different pony is left as an exercise for the reader.
+
 =head1 SUBROUTINES/METHODS
 
 =head2 new
@@ -157,7 +197,8 @@ package. It is not easy to find online.
 =head2 Chumbawamba’s song “Tubthumping”
 
 I really like the song “Tubthumping” by Chumbawamba, which was a hit during
-the 1990s and sounds similar to “Timestamping”, so please check it out:
+the 1990s and whose title sounds similar to “Timestamping”, so please check it
+out:
 
 =over 4
 
