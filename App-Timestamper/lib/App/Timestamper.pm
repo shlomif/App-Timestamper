@@ -3,6 +3,7 @@ package App::Timestamper;
 use strict;
 use warnings;
 
+use IO::Handle;
 use Getopt::Long 2.36 qw(GetOptionsFromArray);
 use Pod::Usage qw/pod2usage/;
 
@@ -62,6 +63,7 @@ sub run
     my ($self) = @_;
 
     local @ARGV = @{$self->{_argv}};
+    STDOUT->autoflush(1);
 
     App::Timestamper::Filter::TS->new->fh_filter(\*ARGV, sub {print $_[0];});
 

@@ -1,5 +1,9 @@
 Revision history for App-Timestamper
 
+v0.0.5      2015-09-23
+    - Add a call to “STDOUT->autoflush(1)” in one place.
+        - This is so the output will be available immediately.
+
 v0.0.4      2015-09-19
     - Add “./contrib/ts-format”.
         - See the “Common Requests” section of the POD.
