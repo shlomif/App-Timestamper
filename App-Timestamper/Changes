@@ -1,7 +1,9 @@
 Revision history for App-Timestamper
 
-v0.0.6      Unknown
+v0.0.6      2015-09-26
     - Add t/pod-sanity.t for testing that some strings occur in the POD.
+    - Add META.json.
+        - Thanks to ETHER.
 
 v0.0.5      2015-09-23
     - Add a call to “STDOUT->autoflush(1)” in one place.
