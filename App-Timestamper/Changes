@@ -1,5 +1,12 @@
 Revision history for App-Timestamper
 
+v0.0.7      2015-09-28
+    - Set the minimal perl version to 5.14.x due to failing tests in ancient
+    perl versions.
+        - I'm sorry it has come to this.
+        - Thanks to Nigel Horne for his cooperation with diagnosing
+        a CPAN Testers failure in perl-5.8.8.
+
 v0.0.6      2015-09-26
     - Add t/pod-sanity.t for testing that some strings occur in the POD.
     - Add META.json.
