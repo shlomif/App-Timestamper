@@ -145,23 +145,13 @@ Hope it helps.
 
 This was requested here -
 L<https://rt.cpan.org/Public/Bug/Display.html?id=106258> - and my reply was
-that it can be easily implemented as a post-processing filter and so may be
+that it may be
 considered unnecessary feature creep, which may also hurt performance.
-However, since this may be a common request, I have added the
-“./contrib/ts-format” program that can be used for that:
 
-    $ export TIMESTAMPER_FORMAT="%Y-%m-%d-%H:%M:%S"
-    $ cat | timestamper | ./contrib/ts-format
-    Hello
-    There
-    Good
-    2015-09-19-14:05:01     Hello
-    2015-09-19-14:05:03     There
-    2015-09-19-14:05:05     Good
+Nevertheless, I implemented a separate CPAN distribution and executable
+to do that - see L<App::Timestamper::Format> .
 
 Enjoy!
-
-I may fork it into its own CPAN distribution in the future.
 
 =head2 I want a Pony!
 
