@@ -61,8 +61,8 @@ my $stream = IO::Async::Stream->new(
 
         while ( $$buffref =~ s/\A([^\n]*\n)//ms )
         {
-            my $t = time();
             my $l = $1;
+            my $t = time();
             printf "\r%.8f\t%s", $t, $l;
 
 =begin foo
