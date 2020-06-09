@@ -1,0 +1,21 @@
+#!/usr/bin/perl
+
+use strict;
+use warnings;
+
+use App::Timestamper::WithElapsed ();
+
+App::Timestamper::WithElapsed->new()->run();
+
+__END__
+
+=head1 NAME
+
+App::Timestamper::WithElapsed - display the timestamp STDIN lines were received and the elapsed
+seconds since the last received line.
+
+=head1 SYNOPSIS
+
+    $ [process] | perl -MApp::Timestamper::WithElapsed -e 'App::Timestamper::WithElapsed->new->run'
+
+=cut
