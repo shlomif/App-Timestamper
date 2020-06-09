@@ -16,6 +16,6 @@ seconds since the last received line.
 
 =head1 SYNOPSIS
 
-    $ [process] | perl -MApp::Timestamper::WithElapsed -e 'App::Timestamper::WithElapsed->new->run'
+    $ [process] | timestamper-with-elapsed
 
 =cut
