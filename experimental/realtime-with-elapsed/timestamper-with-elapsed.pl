@@ -35,7 +35,6 @@ use autodie;
 
 use Time::HiRes qw/ time /;
 
-# use Number::Format::BigFloat qw/ format_number /;
 use IO::Async::Stream          ();
 use IO::Async::Loop            ();
 use IO::Async::Timer::Periodic ();
@@ -64,16 +63,6 @@ my $stream = IO::Async::Stream->new(
             my $l = $1;
             my $t = time();
             printf "\r%.8f\t%s", $t, $l;
-
-=begin foo
-                ( $l =~
-s#(\d+((?:\.\d*)?))#format_number("$1", {decimal_digits=>(length($2)?3:0),},)#egr
-                );
-
-=end foo
-
-=cut
-
             $last_line_time = $t;
         }
 
