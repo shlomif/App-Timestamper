@@ -97,6 +97,16 @@ seconds since the last received line.
 
     $ [process] | perl -MApp::Timestamper::WithElapsed -e 'App::Timestamper::WithElapsed->new->run'
 
+=head1 METHODS
+
+=head2 new
+
+Constructor
+
+=head2 run
+
+Run the application.
+
 =head1 CREDITS
 
 Based on the synopses of L<https://metacpan.org/release/IO-Async>
