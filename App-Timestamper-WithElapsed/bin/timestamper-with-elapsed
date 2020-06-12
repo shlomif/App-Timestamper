@@ -26,4 +26,6 @@ seconds since the last received line.
 Use the time differences from the start of the program instead of absolute
 from-epoch seconds.
 
+[Added at version 0.2.0.]
+
 =cut
