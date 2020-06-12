@@ -98,6 +98,7 @@ sub run
             if ($eof)
             {
                 $out->( time(), $$buffref );
+                $loop->stop();
             }
 
             return 0;
