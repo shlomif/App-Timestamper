@@ -23,19 +23,23 @@ sub new
 
 sub _init
 {
-    my ($self, $args) = @_;
+    my ( $self, $args ) = @_;
 
-    my $argv = [@{$args->{argv}}];
+    my $argv = [ @{ $args->{argv} } ];
 
-    my $help = 0;
-    my $man = 0;
+    my $help    = 0;
+    my $man     = 0;
     my $version = 0;
-    if (! (my $ret = GetOptionsFromArray(
-        $argv,
-        'help|h' => \$help,
-        man => \$man,
-        version => \$version,
-    )))
+    if (
+        !(
+            my $ret = GetOptionsFromArray(
+                $argv,
+                'help|h' => \$help,
+                man      => \$man,
+                version  => \$version,
+            )
+        )
+        )
     {
         die "GetOptions failed!";
     }
@@ -47,7 +51,7 @@ sub _init
 
     if ($man)
     {
-        pod2usage(-verbose => 2);
+        pod2usage( -verbose => 2 );
     }
 
     if ($version)
@@ -63,10 +67,11 @@ sub run
 {
     my ($self) = @_;
 
-    local @ARGV = @{$self->{_argv}};
+    local @ARGV = @{ $self->{_argv} };
     STDOUT->autoflush(1);
 
-    App::Timestamper::Filter::TS->new->fh_filter(\*ARGV, sub {print $_[0];});
+    App::Timestamper::Filter::TS->new->fh_filter( \*ARGV,
+        sub { print $_[0]; } );
 
     return;
 }

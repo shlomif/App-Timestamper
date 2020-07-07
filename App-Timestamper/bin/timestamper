@@ -11,7 +11,7 @@ __END__
 
 =head1 NAME
 
-App::Timestamper - prefix lines with the timestamps of their arrivals.
+timestamper - prefix lines with the timestamps of their arrivals.
 
 =head1 SYNOPSIS
 

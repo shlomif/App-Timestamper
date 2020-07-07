@@ -3,7 +3,7 @@ package App::Timestamper::Filter::TS;
 use strict;
 use warnings;
 
-use Time::HiRes qw/time/;
+use Time::HiRes qw/ time /;
 
 sub new
 {
@@ -12,18 +12,21 @@ sub new
 
 sub fh_filter
 {
-    my ($self, $in, $out) = @_;
+    my ( $self, $in, $out ) = @_;
 
-    while (my $l = <$in>)
+    while ( my $l = <$in> )
     {
-        $out->(sprintf('%.9f', time()) . "\t" . $l);
+        $out->( sprintf( '%.9f', time() ) . "\t" . $l );
     }
 
     return;
 }
 
-
 1;
+
+=head1 NAME
+
+App::Timestamper::Filter::TS - a filter to append timestamps.
 
 =head1 METHODS
 
