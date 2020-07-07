@@ -49,8 +49,24 @@ sub _init
     my $argv = ( $args->{argv} // [] );
 
     my $from_start;
-    GetOptionsFromArray( $argv, 'from-start!' => \$from_start, )
-        or die $!;
+    my $help;
+    GetOptionsFromArray(
+        $argv,
+        'from-start!' => \$from_start,
+        'h|help'      => \$help,
+    ) or die $!;
+    if ($help)
+    {
+        print <<"EOF";
+$0 - timestamps with "elapsed since last updates
+
+--from-start     Display the time that has passed since the start of the process
+                 rather than absolute epoch time.
+
+--help           This help display.
+EOF
+        exit;
+    }
     $self->_from_start($from_start);
     return;
 }
