@@ -31,6 +31,18 @@ sub new
     return $self;
 }
 
+sub _absolute
+{
+    my $self = shift;
+
+    if (@_)
+    {
+        $self->{_absolute} = shift;
+    }
+
+    return $self->{_absolute};
+}
+
 sub _from_start
 {
     my $self = shift;
@@ -48,10 +60,12 @@ sub _init
     my ( $self, $args ) = @_;
     my $argv = ( $args->{argv} // [] );
 
+    my $absolute;
     my $from_start;
     my $help;
     GetOptionsFromArray(
         $argv,
+        'absolute!'   => \$absolute,
         'from-start!' => \$from_start,
         'h|help'      => \$help,
     ) or die $!;
@@ -63,10 +77,14 @@ $0 - timestamps with "elapsed since last updates
 --from-start     Display the time that has passed since the start of the process
                  rather than absolute epoch time.
 
+--absolute       Display the from-start time instead of the elapsed-since-last
+                 -line time.
+
 --help           This help display.
 EOF
         exit;
     }
+    $self->_absolute($absolute);
     $self->_from_start($from_start);
     return;
 }
@@ -82,12 +100,21 @@ sub run
     my $timer = IO::Async::Timer::Periodic->new(
         interval => 0.1,
 
-        on_tick => sub {
-            my $t = time();
-            printf "\r%.8f elapsed", $t - $last_line_time;
+        on_tick => scalar(
+            $self->_absolute()
+            ? sub {
+                my $t = time();
+                printf "\r%.8f since start", $t - $init_time;
 
-            return;
-        },
+                return;
+            }
+            : sub {
+                my $t = time();
+                printf "\r%.8f elapsed", $t - $last_line_time;
+
+                return;
+            }
+        ),
     );
     my $out = sub {
         my $t = shift;
