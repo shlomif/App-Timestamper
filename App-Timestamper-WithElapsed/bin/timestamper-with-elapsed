@@ -34,4 +34,10 @@ Display the seconds since the start of the process.
 
 [Added at version 0.4.0.]
 
+=head2 --output [filename] | -o [filename]
+
+Output the raw timestamps and lines to a file.
+
+[Added at version 0.6.0.]
+
 =cut
