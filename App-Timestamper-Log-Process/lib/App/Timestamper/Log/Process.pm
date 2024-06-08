@@ -119,8 +119,10 @@ sub _mode_from_start
             my $dist_seconds = $distance / $HIGH_BASE;
             my $dist_dot     = $distance % $HIGH_BASE;
             $dist_dot /= $TO_OUT_BASE;
-            $out->printf( "%d\.%0${OUT_NUM_DIGITS}d\t%s\n",
-                $dist_seconds, $dist_dot, $data_str );
+            $out->printf(
+                "%d\.%0*d\t%s\n", $dist_seconds, $OUT_NUM_DIGITS,
+                $dist_dot,        $data_str
+            );
         }
         else
         {
