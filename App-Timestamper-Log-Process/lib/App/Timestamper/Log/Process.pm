@@ -81,8 +81,20 @@ sub _mode_from_start
         die "Leftover command-line arguments after the input filename";
     }
 
-    open my $out, ">", $output_fn;
-    open my $in,  "<", $input_fn;
+    my $USE_STDOUT = ( not( defined($output_fn) and ( $output_fn ne "-" ) ) );
+
+    my $out;
+    if ($USE_STDOUT)
+    {
+        ## no critic
+        open $out, ">&STDOUT";
+        ## use critic
+    }
+    else
+    {
+        open $out, ">", $output_fn;
+    }
+    open my $in, "<", $input_fn;
     my $start;
     my $NUM_DIGITS = 16;
     my $LOW_BASE   = 10;
@@ -131,7 +143,10 @@ sub _mode_from_start
     }
 
     close($in);
-    close($out);
+    if ( not $USE_STDOUT )
+    {
+        close($out);
+    }
 
     return;
 }
