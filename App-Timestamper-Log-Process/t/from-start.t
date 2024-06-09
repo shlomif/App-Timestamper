@@ -2,9 +2,9 @@
 
 use strict;
 use warnings;
-use Test::More tests => 4;
+use Test::More tests => 6;
 
-use Path::Tiny qw/ path tempdir tempfile cwd /;
+use Path::Tiny qw/ cwd path tempdir tempfile /;
 
 my $dir = tempdir( 'CLEANUP' => 1 );
 my $inputfn =
@@ -47,5 +47,24 @@ my $expected_results_fn =
         [ $ofn->lines_utf8(), ],
         [ $expected_results_fn->lines_utf8(), ],
         "Expected from-start results ",
+    )
+}
+
+{
+    my $ofn = $dir->child("output-dash.log.txt");
+    system(
+        $^X,  "-Mblib", "-MApp::Timestamper::Log::Process",
+        "-e", "App::Timestamper::Log::Process->new({argv => [\@ARGV,]})->run()",
+        "--", "from-start", "--output", $ofn, $inputfn,
+    );
+
+    # TEST
+    ok( scalar( -f $ofn ), "from-start dash app-mode produced a file", );
+
+    # TEST
+    is_deeply(
+        [ $ofn->lines_utf8(), ],
+        [ $expected_results_fn->lines_utf8(), ],
+        "Expected from-start with dash results ",
     )
 }

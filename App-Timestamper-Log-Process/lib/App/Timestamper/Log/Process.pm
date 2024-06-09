@@ -51,7 +51,7 @@ sub run
 
     my $mode = shift(@$argv);
 
-    if ( $mode eq "from_start" )
+    if ( ( $mode eq "from_start" ) or ( $mode eq "from-start" ) )
     {
         return $self->_mode_from_start();
     }
@@ -175,5 +175,19 @@ Instantiate a new application object.
 =head2 $app_obj->run()
 
 Run the application based on the Command-Line (“CLI”) arguments.
+
+=head2 MODES
+
+    timestamper-log-process from_start --output zero-based.ts.log.txt absolute-timestamps.ts.log.txt
+
+Start the timestamps from 0 by negating the one on the first line.
+
+=head1 COPYRIGHT AND LICENSE
+
+This software is Copyright (c) 2007 by Shlomi Fish.
+
+This is free software, licensed under:
+
+  The MIT (X11) License
 
 =cut
