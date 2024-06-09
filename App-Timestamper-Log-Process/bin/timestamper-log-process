@@ -1,8 +1,7 @@
 #! /usr/bin/env perl
 #
-# Short description for timestamper-log-process.pl
+# Short description for timestamper-log-process
 #
-# Version 0.0.1
 # Copyright (C) 2024 Shlomi Fish < https://www.shlomifish.org/ >
 #
 # Licensed under the terms of the MIT license.
@@ -23,11 +22,13 @@ __END__
 
 =head1 NAME
 
-XML::Grammar::Screenplay::App::FromProto
+timestamper-log-process - tweaks for L<App::Timestamper> and friends' logs.
 
-=head1 VERSION
+=head2 MODES
 
-version v0.16.0
+    timestamper-log-process from_start --output zero-based.ts.log.txt absolute-timestamps.ts.log.txt
+
+Start the timestamps from 0 by negating the one on the first line.
 
 =head1 COPYRIGHT AND LICENSE
 
