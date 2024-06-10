@@ -114,7 +114,7 @@ sub _mode_from_start
     {
         chomp $line;
         if ( my ( $seconds, $dotdigits, $data_str ) =
-            ( $line =~ m#\A([0-9]+)((?:\.[0-9]{,16})?)\t([^\n]*\z)#ms ) )
+            ( $line =~ m#\A([0-9]+)((?:\.(?:[0-9]){0,16})?)\t([^\n]*\z)#ms ) )
         {
             my $ticks = $seconds * $HIGH_BASE;
             if ( $dotdigits =~ s#\A\.##ms )
