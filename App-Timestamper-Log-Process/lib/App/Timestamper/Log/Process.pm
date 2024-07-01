@@ -272,6 +272,8 @@ Start the timestamps from 0 by negating the one on the first line.
 
 Calculate the wallclock times, from-start-to-finish, of one or more timestamper log files.
 
+( Added in v0.2.0 . ).
+
 =head1 COPYRIGHT AND LICENSE
 
 This software is Copyright (c) 2007 by Shlomi Fish.
