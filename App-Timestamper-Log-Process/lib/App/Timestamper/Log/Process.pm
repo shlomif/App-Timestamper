@@ -82,6 +82,28 @@ sub run
     return;
 }
 
+sub _calc_ticks_and_data_str
+{
+    my ( $self, $line ) = @_;
+    chomp $line;
+    if ( my ( $seconds, $dotdigits, $data_str ) =
+        ( $line =~ m#\A([0-9]+)((?:\.(?:[0-9]){0,16})?)\t([^\n]*\z)#ms ) )
+    {
+        my $ticks = $seconds * $HIGH_BASE;
+        if ( $dotdigits =~ s#\A\.##ms )
+        {
+            $dotdigits .=
+                scalar( "0" x ( $NUM_DIGITS - length($dotdigits) ) );
+            $ticks += ( 0 + $dotdigits );
+        }
+        return ( $ticks, $data_str );
+    }
+    else
+    {
+        die "The line is formatted wrong";
+    }
+}
+
 sub _mode_from_start
 {
     my ( $self, ) = @_;
@@ -119,33 +141,19 @@ sub _mode_from_start
     while ( my $line = <$in> )
     {
         chomp $line;
-        if ( my ( $seconds, $dotdigits, $data_str ) =
-            ( $line =~ m#\A([0-9]+)((?:\.(?:[0-9]){0,16})?)\t([^\n]*\z)#ms ) )
+        my ( $ticks, $data_str ) = $self->_calc_ticks_and_data_str($line);
+        if ( not defined($start) )
         {
-            my $ticks = $seconds * $HIGH_BASE;
-            if ( $dotdigits =~ s#\A\.##ms )
-            {
-                $dotdigits .=
-                    scalar( "0" x ( $NUM_DIGITS - length($dotdigits) ) );
-                $ticks += ( 0 + $dotdigits );
-            }
-            if ( not defined($start) )
-            {
-                $start = $ticks;
-            }
-            my $distance     = $ticks - $start;
-            my $dist_seconds = $distance / $HIGH_BASE;
-            my $dist_dot     = $distance % $HIGH_BASE;
-            $dist_dot /= $TO_OUT_BASE;
-            $out->printf(
-                "%d\.%0*d\t%s\n", $dist_seconds, $OUT_NUM_DIGITS,
-                $dist_dot,        $data_str
-            );
+            $start = $ticks;
         }
-        else
-        {
-            die "The line is formatted wrong";
-        }
+        my $distance     = $ticks - $start;
+        my $dist_seconds = $distance / $HIGH_BASE;
+        my $dist_dot     = $distance % $HIGH_BASE;
+        $dist_dot /= $TO_OUT_BASE;
+        $out->printf(
+            "%d\.%0*d\t%s\n", $dist_seconds, $OUT_NUM_DIGITS,
+            $dist_dot,        $data_str
+        );
     }
 
     close($in);
@@ -191,27 +199,9 @@ sub _mode_time
 
         {
             my $line = <$in>;
-            chomp $line;
-            if (
-                my ( $seconds, $dotdigits, $data_str ) = (
-                    $line =~ m#\A([0-9]+)((?:\.(?:[0-9]){0,16})?)\t([^\n]*\z)#ms
-                )
-                )
-            {
-                my $ticks = $seconds * $HIGH_BASE;
-                if ( $dotdigits =~ s#\A\.##ms )
-                {
-                    $dotdigits .=
-                        scalar( "0" x ( $NUM_DIGITS - length($dotdigits) ) );
-                    $ticks += ( 0 + $dotdigits );
-                }
-                die if ( defined($start) );
-                $start = $ticks;
-            }
-            else
-            {
-                die "The line is formatted wrong";
-            }
+            my ( $ticks, $data_str ) = $self->_calc_ticks_and_data_str($line);
+            die if ( defined($start) );
+            $start = $ticks;
         }
 
         close($in);
@@ -221,26 +211,9 @@ sub _mode_time
         my $end_ticks;
         {
             my $line = $bw_in->readline();
-            chomp $line;
             $bw_in->close();
-            if (
-                my ( $seconds, $dotdigits, $data_str ) = (
-                    $line =~ m#\A([0-9]+)((?:\.(?:[0-9]){0,16})?)\t([^\n]*\z)#ms
-                )
-                )
-            {
-                $end_ticks = $seconds * $HIGH_BASE;
-                if ( $dotdigits =~ s#\A\.##ms )
-                {
-                    $dotdigits .=
-                        scalar( "0" x ( $NUM_DIGITS - length($dotdigits) ) );
-                    $end_ticks += ( 0 + $dotdigits );
-                }
-            }
-            else
-            {
-                die "The line is formatted wrong";
-            }
+            my ( $ticks, $data_str ) = $self->_calc_ticks_and_data_str($line);
+            $end_ticks = $ticks;
         }
         my $distance     = $end_ticks - $start;
         my $dist_seconds = $distance / $HIGH_BASE;
