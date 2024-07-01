@@ -44,6 +44,20 @@ sub _init
     return;
 }
 
+my $NUM_DIGITS = 16;
+my $LOW_BASE   = 10;
+my $HIGH_BASE  = 1;
+foreach my $e ( 1 .. $NUM_DIGITS )
+{
+    $HIGH_BASE *= $LOW_BASE;
+}
+my $OUT_NUM_DIGITS = 8;
+my $TO_OUT_BASE    = 1;
+foreach my $e ( 1 .. ( $NUM_DIGITS - $OUT_NUM_DIGITS ) )
+{
+    $TO_OUT_BASE *= $LOW_BASE;
+}
+
 sub run
 {
     my ( $self, ) = @_;
@@ -101,19 +115,6 @@ sub _mode_from_start
     }
     open my $in, "<", $input_fn;
     my $start;
-    my $NUM_DIGITS = 16;
-    my $LOW_BASE   = 10;
-    my $HIGH_BASE  = 1;
-    foreach my $e ( 1 .. $NUM_DIGITS )
-    {
-        $HIGH_BASE *= $LOW_BASE;
-    }
-    my $OUT_NUM_DIGITS = 8;
-    my $TO_OUT_BASE    = 1;
-    foreach my $e ( 1 .. ( $NUM_DIGITS - $OUT_NUM_DIGITS ) )
-    {
-        $TO_OUT_BASE *= $LOW_BASE;
-    }
 
     while ( my $line = <$in> )
     {
@@ -187,19 +188,6 @@ sub _mode_time
 
         open my $in, "<", $input_fn;
         my $start;
-        my $NUM_DIGITS = 16;
-        my $LOW_BASE   = 10;
-        my $HIGH_BASE  = 1;
-        foreach my $e ( 1 .. $NUM_DIGITS )
-        {
-            $HIGH_BASE *= $LOW_BASE;
-        }
-        my $OUT_NUM_DIGITS = 8;
-        my $TO_OUT_BASE    = 1;
-        foreach my $e ( 1 .. ( $NUM_DIGITS - $OUT_NUM_DIGITS ) )
-        {
-            $TO_OUT_BASE *= $LOW_BASE;
-        }
 
         {
             my $line = <$in>;
