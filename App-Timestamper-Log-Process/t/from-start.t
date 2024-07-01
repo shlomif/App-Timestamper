@@ -5,7 +5,7 @@ use warnings;
 use 5.014;
 use autodie;
 
-use Test::More tests => 6;
+use Test::More tests => 8;
 
 use Path::Tiny qw/ cwd path tempdir tempfile /;
 
@@ -83,4 +83,19 @@ sub _portable_lines_aref
         _portable_lines_aref($expected_results_fn),
         "Expected from-start with dash results ",
     )
+}
+
+{
+    my $ofn = $dir->child("output_time.log.txt");
+    system( $^X, "-Mblib", cwd()->child( "bin", "timestamper-log-process", ),
+        "time", "--output", $ofn, $inputfn, );
+
+    # TEST
+    ok( scalar( -f $ofn ), "time app-mode produced a file", );
+
+    # TEST
+    like(
+        _portable_lines_aref($ofn)->[0],
+        qr#\A112\.86074400\s#ms, "Expected time-mode results ",
+    );
 }
