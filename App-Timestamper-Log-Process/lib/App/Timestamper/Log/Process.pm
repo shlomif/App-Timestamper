@@ -206,10 +206,10 @@ sub _mode_time
 
         close($in);
 
-        my $bw_in = File::ReadBackwards->new($input_fn)
-            or Carp::confess("can't open $input_fn backwards $!");
         my $end_ticks;
         {
+            my $bw_in = File::ReadBackwards->new($input_fn)
+                or Carp::confess("can't open $input_fn backwards $!");
             my $line = $bw_in->readline();
             $bw_in->close();
             my ( $ticks, $data_str ) = $self->_calc_ticks_and_data_str($line);
