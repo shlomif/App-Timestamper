@@ -184,10 +184,6 @@ sub _mode_time
         {
             die "Must specify an input file-path!";
         }
-        if (@$argv)
-        {
-            die "Leftover command-line arguments after the input filename";
-        }
 
         open my $in, "<", $input_fn;
         my $start;
